@@ -126,92 +126,6 @@ control_panel = html.Div(
         ),
     ])
 
-about_app = html.Div(
-    children=[
-        html.Ul([
-            html.Li(
-                html.A('Global Kaggle Data',
-                       href='https://www.kaggle.com/imdevskp/corona-virus-report')),
-            html.Li(
-                html.A('Open Source', href='https://github.com/nite/covid-19')),
-        ]),
-        html.P('''
-        This interactive data visualisation dashboard illustrates what is possible using 
-        the Open Source & free python Plotly Dash library and very little code
-        to deliver some simple & powerful insights into the global data of the 
-        Covid-19 Coronavirus. 
-        This is rapid app development: not intended for 'production', more for prototyping.
-        Think of it as a completely free Tableau, with the power of python for data science
-        & machine learning directly accessible. The source code is in the GitHub link above.
-        '''),
-        html.P('''
-        The dashboard is optimised for desktop or laptop - it may work on tablet, however is clunky on mobile.
-        '''),
-        html.P('''
-        All plots are interactive - hit play on the map, hover over bubbles, lines & points 
-        for tooltips (dynamic annotations), zoom using your mouse (drag to select area to 
-        zoom into), mouse wheel or trackpad, and double click to zoom out & reset. 
-        Click lines in legends to hide & show, or double-click to show only 
-        one line. Be sure to use zoom on the map, the bubbles overlap & become a lot clearer 
-        on zooming.
-        '''),
-        html.P('''
-        To maximise any plot to fill the window, use the expand icon in top left. 
-        '''),
-        html.P('''
-        To filter the bottom middle timeline to a country, hover over a horizontal bar
-        in the rightmost plot.
-        '''),
-        html.P('''
-        To switch between Confirmed, Active & Recorded, and Per Capita/Actual,
-         use the radio buttons in the control panel, top right.
-        '''),
-        html.P('''
-        The code is entirely Open Source, and is intended as a showcase of what is possible 
-        in very few lines of python Plotly Dash code. 
-        For example, take a look at plot.py in the github repo for the single line of 
-        Plotly Express code to generate the scatter_mapbox with animating timeline.  
-        '''),
-        html.P('''
-        We use Global Kaggle Data which is generated & cleaned from the CSSEGISandData/COVID-19 
-        dataset (also on GitHub).
-        '''),
-        html.P('''
-        Per Capita numbers are number / Population * 100,000 
-        '''),
-        html.P('''
-        It was rapid to develop, and trivial to host (for free) via Heroku - see the GitHub link for details. 
-        '''),
-        html.P('''
-        There is an accompanying Jupter Notebook in the Open Source GitHub Repo (above) 
-        '''),
-    ]
-)
-
-modal = html.Div(
-    [
-        dbc.Button('About the Dashboard',
-                   id='open_modal',
-                   color='link'),
-        dbc.Modal(
-            [
-                dbc.ModalHeader('COVID-19 Open Source Dashboard | Global John Hopkins Data'),
-                dbc.ModalBody(
-                    children=[
-                        about_app,
-                    ]
-                ),
-                dbc.ModalFooter(
-                    dbc.Button('Close',
-                               id='close',
-                               color='link',
-                               className='ml-auto')
-                ),
-            ],
-            id='modal',
-        ),
-    ]
-)
 
 app.title = 'COVID-19 Dashboard | Saudi Arabia'
 
@@ -230,7 +144,6 @@ app.layout = html.Div(
                 html.Div(
                     className='header',
                     children=[
-                        modal,
                         control_panel
                     ])
             ]),

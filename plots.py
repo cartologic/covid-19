@@ -80,11 +80,11 @@ def get_map_plot(covid_df, count_col='Confirmed'):
         size=values,
         opacity=0.6,
         size_max=50,
-        zoom=.95,
+        zoom=5,
         animation_frame=df['Date'].astype(str),
         center=go.layout.mapbox.Center(
-            lat=14,
-            lon=21
+            lat=23.8859,
+            lon=45.0792
         ),
         template='plotly_dark',
         color_discrete_sequence=[get_default_color(count_col)],

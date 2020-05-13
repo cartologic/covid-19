@@ -4,9 +4,10 @@ html, body, #react-entry-point, #_dash-global-error-container, .viz-container {
   width: 100%;
   margin: 0;
   padding: 0;
-  background: #000922;
-  color: #6195d2;
-  font-family: "Rajdhani", sans-serif;
+  background: #404040;
+  color: #4bae53;
+  font-family: Lato, sans-serif;
+  font-weight: bold;
 }
 
 .modal-content {
@@ -40,7 +41,7 @@ h4 {
 }
 
 .main-tab-family > .tab--selected.jsx-2137964197 {
-  background-color: #119DFF;
+  background-color: #4bae53;
   color: white;
 }
 
@@ -48,16 +49,18 @@ h4 {
   justify-content: space-between;
 }
 
-.title {
+.title, .title h4 {
   display: flex;
   flex-direction: row;
   align-items: center;
+  font-weight: bold;
 }
 
 .header, .control-panel {
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-top: 5px;
 }
 .header *, .control-panel * {
   white-space: nowrap;
@@ -124,7 +127,7 @@ h3 {
   top: 0;
   left: 0;
   z-index: 99;
-  background: #000922;
+  background: #404040;
 }
 .parent > div.maximised .fa {
   z-index: 100;

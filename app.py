@@ -42,17 +42,11 @@ app = dash.Dash(
 
 app.index_string = open('index.html', 'r').read()
 
-try:
-    import kaggle
+covid_df = pd.read_csv('./data/progressive_cases_byCity_until_20200505.csv')
 
-    kaggle.api.authenticate()
-    kaggle.api.dataset_download_files('imdevskp/corona-virus-report', path='./data', unzip=True)
-except:
-    print('download kaggle auth to ~/.kaggle.json')
 
-covid_df = pd.read_csv('./data/covid_19_clean_complete.csv')
-pop_df = pd.read_csv('./data/macro_corona_data.csv')
-covid_df = wrangle_data(covid_df, pop_df)
+#pop_df = pd.read_csv('./data/macro_corona_data.csv')
+covid_df = wrangle_data(covid_df)
 
 
 def get_graph(class_name, **kwargs):
@@ -99,8 +93,8 @@ screen1 = html.Div(
         ),
     ])
 
-countries = covid_df['Country'].unique()
-countries.sort()
+cities = covid_df['City_Name'].unique()
+cities.sort()
 
 # dcc.Dropdown(
 # options=dropdown_options(countries),
@@ -120,7 +114,6 @@ control_panel = html.Div(
             id='count_type',
             className='radio-group',
             options=[
-                {'label': 'Per Capita', 'value': 'per_capita'},
                 {'label': 'Actual', 'value': 'actual'}
             ],
             value='actual',
@@ -220,6 +213,8 @@ modal = html.Div(
     ]
 )
 
+app.title = 'COVID-19 Dashboard | Saudi Arabia'
+
 app.layout = html.Div(
     className='covid-container',
     children=[
@@ -229,7 +224,7 @@ app.layout = html.Div(
                 html.Div(
                     className='title',
                     children=[
-                        html.H4('COVID-19 Dashboard | Global Kaggle Data'),
+                        html.H4('COVID-19 Dashboard | Saudi Arabia'),
                     ]
                 ),
                 html.Div(
@@ -304,7 +299,7 @@ def update_bar_plot(count_type, count_category):
         Input('count_type', 'value')
     ])
 def update_x_timeseries(country, count_type):
-    df = covid_df[covid_df['Country'] == country] \
+    df = covid_df[covid_df['City_Name'] == country] \
         if country \
         else covid_df
     return get_total_timeseries(

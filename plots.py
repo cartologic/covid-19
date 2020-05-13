@@ -111,7 +111,7 @@ def get_map_plot(covid_df, count_col='Confirmed'):
 
 
 def get_total_timeseries(covid_df, country=None, per_capita=False):
-    title = country if country else 'All Countries'
+    title = country if country else 'All Cities'
     covid_df = covid_df.assign(Date=covid_df['Date'].astype(np.datetime64))
     suffix = 'PerCapita' if per_capita else ''
     df = covid_df[covid_df['Confirmed'] > 0] \
@@ -160,22 +160,22 @@ def get_country_timeseries(covid_df, count_col='Confirmed'):
 
     top_countries = last_df \
         .nlargest(plot_threshold, count_col) \
-        .reset_index()['Country'].unique()
+        .reset_index()['City_Name'].unique()
 
-    df = covid_df[covid_df['Country'].isin(top_countries)] \
-        .groupby(['Date', 'Country']) \
+    df = covid_df[covid_df['City_Name'].isin(top_countries)] \
+        .groupby(['Date', 'City_Name']) \
         .sum().reset_index() \
-        .sort_values(['Date', 'Country'])
+        .sort_values(['Date', 'City_Name'])
 
     fig = px.line(
         x=df['Date'],
         y=df[count_col],
-        color=df['Country'],
+        color=df['City_Name'],
         labels={
             'y': count_col,
             'x': 'Date',
         },
-        hover_name=df['Country'],
+        hover_name=df['City_Name'],
         line_shape='spline',
         render_mode='svg',
         template='plotly_dark',
@@ -192,7 +192,7 @@ def get_country_timeseries(covid_df, count_col='Confirmed'):
 def get_bar_plot(covid_df, count_col='Confirmed'):
     last_df = covid_df[covid_df['Date'] == covid_df['Date'].max()]
     df = last_df.groupby([
-        'Country',
+        'City_Name',
     ]) \
         .sum().reset_index() \
         .nlargest(plot_threshold, count_col) \
@@ -206,7 +206,7 @@ def get_bar_plot(covid_df, count_col='Confirmed'):
         x_label = count_col
 
     fig = px.bar(
-        y=df['Country'],
+        y=df['City_Name'],
         x=values,
         text=df[count_col],
         # color=df['Continent'],

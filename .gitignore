@@ -2,3 +2,5 @@
 .ipynb_checkpoints
 *.xls
 *.map
+__pycache__/
+node_modules/

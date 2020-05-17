@@ -7,6 +7,7 @@ import pandas as pd
 from dash.dependencies import Input, Output, State
 import time, os, re
 from datetime import datetime
+from pathlib import Path
 
 from plots import plot_config, get_map_plot, get_total_timeseries, get_country_timeseries, get_bar_plot
 from wrangle import wrangle_data
@@ -49,6 +50,7 @@ covid_df = pd.read_csv(url)
 covid_df = wrangle_data(covid_df)
 
 # Export the latest dataset and save it to the data folder
+Path("./data").mkdir(parents=True, exist_ok=True)
 covid_df.to_csv(r"./data/Saudi-cases-" + time.strftime("%Y-%m-%d") + ".csv", index=False)
 
 def days_between(date1, date2):

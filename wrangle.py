@@ -9,9 +9,9 @@ def wrangle_data(covid_df):
     covid_df.sort_values(by=['Date'], inplace = True)
     covid_df.reset_index(drop=True, inplace=True)
 
-    covid_df['Longitude'] = covid_df['X']
-    covid_df['Latitude'] = covid_df['Y']
     covid_df['City_Name'] = covid_df['City_Name']
+
+    print(covid_df)
 
     covid_df = covid_df.assign(
         logCumConf=np.where(

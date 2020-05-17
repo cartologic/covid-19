@@ -74,8 +74,8 @@ def get_map_plot(covid_df, count_col='Confirmed'):
 
     fig = px.scatter_mapbox(
         mapbox_style='carto-darkmatter',
-        lat=df['Latitude'],
-        lon=df['Longitude'],
+        lat=df['Y'],
+        lon=df['X'],
         hover_name=df['Description'],
         size=values,
         opacity=0.6,

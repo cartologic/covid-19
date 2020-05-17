@@ -1,5 +1,6 @@
 import numpy as np
 from shapely.wkt import loads
+from pyproj import Proj, transform
 
 def wrangle_data(covid_df):
     # Change Date format to yyyy-mm-dd
@@ -12,9 +13,14 @@ def wrangle_data(covid_df):
     # Convert WKT to long lat
     long_points = []
     lat_points = []
+    inProj = Proj('epsg:3857')
+    outProj = Proj('epsg:4326')
+
     for value in covid_df['the_geom'].values:
-        long_points.append(loads(value).x)
-        lat_points.append(loads(value).y)
+        # PROJ honors the axis order of the CRS definition (which is lat, lon)
+        latitude, longitude = transform(inProj, outProj, loads(value).x, loads(value).y)
+        long_points.append(longitude)
+        lat_points.append(latitude)
     covid_df = covid_df.assign(long=long_points)
     covid_df = covid_df.assign(lat=lat_points)
 

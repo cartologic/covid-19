@@ -8,3 +8,4 @@ pycountry-convert
 kaggle
 PyGithub
 gevent
+Shapely

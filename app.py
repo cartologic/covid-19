@@ -1,17 +1,16 @@
-# Data Source https://www.kaggle.com/imdevskp/corona-virus-report
-
 import logging
-import os
-
 import dash
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
 import pandas as pd
 from dash.dependencies import Input, Output, State
+import time, os, re
+from datetime import datetime
 
 from plots import plot_config, get_map_plot, get_total_timeseries, get_country_timeseries, get_bar_plot
 from wrangle import wrangle_data
+
 
 logging.basicConfig()
 logger = logging.getLogger(__name__)
@@ -42,12 +41,35 @@ app = dash.Dash(
 
 app.index_string = open('index.html', 'r').read()
 
-covid_df = pd.read_csv('./data/progressive_cases_byCity_until_20200505.csv')
+# Fetch and read the dataset
+url = 'http://datagovsa.mapapps.cloud/geoserver/ows?outputFormat=csv&service=WFS&srs=EPSG%3A3857&request=GetFeature&typename=geonode%3Acases&version=1.0.0'
+covid_df = pd.read_csv(url)
 
-
-#pop_df = pd.read_csv('./data/macro_corona_data.csv')
+# Dataset Preprocessing
 covid_df = wrangle_data(covid_df)
 
+# Export the latest dataset and save it to the data folder
+covid_df.to_csv(r"./data/Saudi-cases-" + time.strftime("%Y-%m-%d") + ".csv", index=False)
+
+def days_between(date1, date2):
+    date1 = datetime.strptime(date1, "%Y-%m-%d")
+    date2 = datetime.strptime(date2, "%Y-%m-%d")
+    return abs((date2 - date1).days)
+
+# Remove the file if it's time-day delta > 10 days
+directory = os.fsencode("./data")
+for file in os.listdir(directory):
+    fileName = os.fsdecode(file)
+    if fileName.endswith(".csv"):
+        match = re.search(r'\d{4}-\d{2}-\d{2}', fileName)
+        if match:
+            file_date = datetime.strptime(match.group(), '%Y-%m-%d').date()
+            if days_between(str(file_date),time.strftime("%Y-%m-%d")) > 10:
+                os.remove("./data/" + fileName)
+            else:
+                pass
+        else:
+            continue
 
 def get_graph(class_name, **kwargs):
     return html.Div(

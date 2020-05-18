@@ -1,10 +1,9 @@
 import logging
 import dash
-import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
 import pandas as pd
-from dash.dependencies import Input, Output, State
+from dash.dependencies import Input, Output
 import time, os, re
 from datetime import datetime
 from pathlib import Path
@@ -49,29 +48,29 @@ covid_df = pd.read_csv(url)
 # Dataset Preprocessing
 covid_df = wrangle_data(covid_df)
 
-# Export the latest dataset and save it to the data folder
-Path("./data").mkdir(parents=True, exist_ok=True)
-covid_df.to_csv(r"./data/Saudi-cases-" + time.strftime("%Y-%m-%d") + ".csv", index=False)
-
-def days_between(date1, date2):
-    date1 = datetime.strptime(date1, "%Y-%m-%d")
-    date2 = datetime.strptime(date2, "%Y-%m-%d")
-    return abs((date2 - date1).days)
-
-# Remove the file if it's time-day delta > 10 days
-directory = os.fsencode("./data")
-for file in os.listdir(directory):
-    fileName = os.fsdecode(file)
-    if fileName.endswith(".csv"):
-        match = re.search(r'\d{4}-\d{2}-\d{2}', fileName)
-        if match:
-            file_date = datetime.strptime(match.group(), '%Y-%m-%d').date()
-            if days_between(str(file_date),time.strftime("%Y-%m-%d")) > 10:
-                os.remove("./data/" + fileName)
-            else:
-                pass
-        else:
-            continue
+# # Export the latest dataset and save it to the data folder
+# Path("./data").mkdir(parents=True, exist_ok=True)
+# covid_df.to_csv(r"./data/Saudi-cases-" + time.strftime("%Y-%m-%d") + ".csv", index=False)
+#
+# def days_between(date1, date2):
+#     date1 = datetime.strptime(date1, "%Y-%m-%d")
+#     date2 = datetime.strptime(date2, "%Y-%m-%d")
+#     return abs((date2 - date1).days)
+#
+# # Remove the file if it's time-day delta > 10 days
+# directory = os.fsencode("./data")
+# for file in os.listdir(directory):
+#     fileName = os.fsdecode(file)
+#     if fileName.endswith(".csv"):
+#         match = re.search(r'\d{4}-\d{2}-\d{2}', fileName)
+#         if match:
+#             file_date = datetime.strptime(match.group(), '%Y-%m-%d').date()
+#             if days_between(str(file_date),time.strftime("%Y-%m-%d")) > 10:
+#                 os.remove("./data/" + fileName)
+#             else:
+#                 pass
+#         else:
+#             continue
 
 def get_graph(class_name, **kwargs):
     return html.Div(

@@ -3,10 +3,6 @@ pandas
 gunicorn
 plotly
 numpy
-dash-bootstrap-components
-pycountry-convert
-kaggle
-PyGithub
 gevent
 Shapely
 Pyproj

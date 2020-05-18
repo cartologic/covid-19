@@ -1,0 +1,10 @@
+version: '3'
+services:
+  saudi-dashboard:
+    build: .
+    ports:
+      - 9000:9000
+    volumes:
+      - ".:/code"
+volumes:
+  data:

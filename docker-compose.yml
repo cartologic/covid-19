@@ -3,8 +3,8 @@ services:
   saudi-dashboard:
     build: .
     ports:
-      - 9000:9000
-    volumes:
-      - ".:/code"
-volumes:
-  data:
+      - 9595:9000
+#    volumes:
+#      - "data:/code/data"
+#volumes:
+#  data:

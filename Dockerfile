@@ -1,7 +1,7 @@
-FROM python:3.7
+FROM tiangolo/uwsgi-nginx-flask:python3.7-2020-05-09
 
-RUN mkdir /code
-WORKDIR /code
+RUN mkdir /app
+WORKDIR /app
 COPY * . ./
 RUN pip install -r requirements.txt
-ENTRYPOINT python app.py
+ENV NGINX_WORKER_PROCESSES auto

@@ -1,4 +1,4 @@
-# Coronavirus COVID-19 Dashboard - Global Kaggle Data
+# Coronavirus COVID-19 Saudi Dashboard - Global Kaggle Data
 
 #### Live Dashboard
 https://covid19-dash.herokuapp.com/  

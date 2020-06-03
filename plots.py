@@ -52,7 +52,7 @@ empty_plot = px.line(template='plotly_dark', )
 def get_default_color(count_col='Confirmed'):
     if count_col == 'Confirmed':
         return '#6195d2'
-    if count_col == 'Active':
+    if count_col == 'Tested':
         return '#2B34B9'
     if count_col == 'Recovered':
         return '#BC472A'
@@ -121,7 +121,7 @@ def get_total_timeseries(covid_df, country=None, per_capita=False):
               value_vars=[
                   'Confirmed' + suffix,
                   'Recovered' + suffix,
-                  'Active' + suffix,
+                  'Tested' + suffix,
                   'Deaths' + suffix
               ]) \
         .sort_values('Date')

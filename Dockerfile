@@ -4,4 +4,4 @@ RUN mkdir /app
 WORKDIR /app
 COPY * . ./
 RUN pip install -r requirements.txt
-ENV NGINX_WORKER_PROCESSES auto
+ENTRYPOINT python app.py

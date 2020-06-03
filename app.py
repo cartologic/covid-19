@@ -41,9 +41,13 @@ app = dash.Dash(
 
 app.index_string = open('index.html', 'r').read()
 
-# Fetch and read the dataset
-url = 'http://datagovsa.mapapps.cloud/geoserver/ows?outputFormat=csv&service=WFS&srs=EPSG%3A3857&request=GetFeature&typename=geonode%3Acases&version=1.0.0'
-covid_df = pd.read_csv(url)
+def fetch_data():
+    url = 'http://datagovsa.mapapps.cloud/geoserver/ows?outputFormat=csv&service=WFS&srs=EPSG%3A4326&request=GetFeature&typename=geonode%3Anewcases_csy0&version=1.0.0'
+    return pd.read_csv(url)
+
+covid_df = fetch_data()
+covid_df = covid_df.rename(columns={"Name_Eng": "City_Name", "Reportdt": "Date"})
+
 
 # Dataset Preprocessing
 covid_df = wrangle_data(covid_df)
@@ -128,7 +132,7 @@ control_panel = html.Div(
         dcc.RadioItems(
             id='count_category',
             className='radio-group',
-            options=dropdown_options(['Confirmed', 'Active', 'Recovered', 'Deaths']),
+            options=dropdown_options(['Confirmed', 'Tested', 'Recovered', 'Deaths']),
             value='Confirmed',
             labelStyle={'display': 'inline-block'}
         ),

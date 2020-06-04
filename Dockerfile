@@ -1,4 +1,4 @@
-FROM tiangolo/uwsgi-nginx-flask:python3.7-2020-05-09
+FROM python:3.7
 
 RUN mkdir /app
 WORKDIR /app

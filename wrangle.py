@@ -13,12 +13,12 @@ def wrangle_data(covid_df):
     # Convert WKT to long lat
     long_points = []
     lat_points = []
-    inProj = Proj('epsg:4326')
+    inProj = Proj('epsg:3857')
     outProj = Proj('epsg:4326')
 
     for value in covid_df['the_geom'].values:
         # PROJ honors the axis order of the CRS definition (which is lat, lon)
-        longitude, latitude = transform(inProj, outProj, loads(value).x, loads(value).y)
+        latitude, longitude = transform(inProj, outProj, loads(value).x, loads(value).y)
         long_points.append(longitude)
         lat_points.append(latitude)
     covid_df = covid_df.assign(long=long_points)

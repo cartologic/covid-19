@@ -4,6 +4,7 @@ services:
     build: .
     ports:
       - 9595:9000
+    restart: unless-stopped
 #    volumes:
 #      - "data:/code/data"
 #volumes:

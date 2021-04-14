@@ -119,10 +119,10 @@ def get_total_timeseries(covid_df, country=None, per_capita=False):
         .reset_index() \
         .melt(id_vars='Date',
               value_vars=[
-                  'Confirmed' + suffix,
-                  'Recovered' + suffix,
-                  'Tested' + suffix,
-                  'Deaths' + suffix
+                  'confirmed' + suffix,
+                  'recovered' + suffix,
+                  'tested' + suffix,
+                  'deaths' + suffix
               ]) \
         .sort_values('Date')
     fig = px.line(

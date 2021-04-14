@@ -46,7 +46,13 @@ def fetch_data():
     return pd.read_csv(url)
 
 covid_df = fetch_data()
-covid_df = covid_df.rename(columns={"Name_Eng": "City_Name", "Reportdt": "Date"})
+
+cityName = "Name_Eng"
+reportedDate = "Reportdt"
+if (cityName in covid_df.columns) and (reportedDate in covid_df.columns):
+    covid_df = covid_df.rename(columns={cityName: "City_Name", reportedDate: "Date"})
+else:
+    covid_df = covid_df.rename(columns={cityName.lower(): "City_Name", reportedDate.lower(): "Date"})
 
 
 # Dataset Preprocessing

@@ -16,21 +16,21 @@ def wrangle_data(covid_df):
     inProj = Proj('epsg:3857')
     outProj = Proj('epsg:4326')
 
-    for value in covid_df['the_geom'].values:
+    for value in covid_df['geom'].values:
         # PROJ honors the axis order of the CRS definition (which is lat, lon)
         latitude, longitude = transform(inProj, outProj, loads(value).x, loads(value).y)
         long_points.append(longitude)
         lat_points.append(latitude)
     covid_df = covid_df.assign(long=long_points)
     covid_df = covid_df.assign(lat=lat_points)
-    covid_df = covid_df.drop(['the_geom'], axis=1)
+    covid_df = covid_df.drop(['geom'], axis=1)
 
     covid_df = covid_df.assign(
         logCumConf=np.where(
-            covid_df['Confirmed'] > 0,
-            np.log(covid_df['Confirmed']) /
+            covid_df['confirmed'] > 0,
+            np.log(covid_df['confirmed']) /
             np.where(
-                covid_df['Confirmed'] > 700,
+                covid_df['confirmed'] > 700,
                 np.log(1.01),
                 np.log(1.05)
             ),
@@ -38,14 +38,14 @@ def wrangle_data(covid_df):
         )
     )
 
-    covid_df['log10'] = np.where(covid_df['Confirmed'] > 0,
-                                 np.ceil(np.log10(covid_df['Confirmed'])), 0)
+    covid_df['log10'] = np.where(covid_df['confirmed'] > 0,
+                                 np.ceil(np.log10(covid_df['confirmed'])), 0)
     covid_df['log_group'] = np.power(10, covid_df['log10'] - 1).astype(np.int).astype(str) \
                             + '-' + np.power(10, covid_df['log10']).astype(np.int).astype(str)
     covid_df['Description'] = covid_df['City_Name'] + '<br>' \
-                              + 'Confirmed: ' + covid_df['Confirmed'].astype(str) + '<br>' \
-                              + 'Recovered: ' + covid_df['Recovered'].astype(str) + '<br>' \
-                              + 'Tested: ' + covid_df['Tested'].astype(str) + '<br>' \
-                              + 'Deaths: ' + covid_df['Deaths'].astype(str) + '<br>' \
+                              + 'Confirmed: ' + covid_df['confirmed'].astype(str) + '<br>' \
+                              + 'Recovered: ' + covid_df['recovered'].astype(str) + '<br>' \
+                              + 'Tested: ' + covid_df['tested'].astype(str) + '<br>' \
+                              + 'Deaths: ' + covid_df['deaths'].astype(str) + '<br>' \
                               + 'Confirmed Range: ' + covid_df['log_group'].astype(str) + '<br>'
     return covid_df

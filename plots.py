@@ -49,20 +49,20 @@ plot_threshold = 35
 empty_plot = px.line(template='plotly_dark', )
 
 
-def get_default_color(count_col='confirmed'):
-    if count_col == 'confirmed':
+def get_default_color(count_col='Confirmed'):
+    if count_col == 'Confirmed':
         return '#6195d2'
-    if count_col == 'tested':
+    if count_col == 'Tested':
         return '#2B34B9'
-    if count_col == 'recovered':
+    if count_col == 'Recovered':
         return '#BC472A'
 
 
-def get_map_plot(covid_df, count_col='confirmed'):
+def get_map_plot(covid_df, count_col='Confirmed'):
     df = covid_df[covid_df[count_col] > 0]
 
     # todo: convert to https://plot.ly/python/mapbox-county-choropleth/
-    values = df['logCumConf' if count_col == 'confirmed' else count_col]
+    values = df['logCumConf' if count_col == 'Confirmed' else count_col]
 
     # map_fig = px.scatter_geo(lat=map_df['Latitude'],
     #                          lon=map_df['Longitude'],
@@ -114,15 +114,15 @@ def get_total_timeseries(covid_df, country=None, per_capita=False):
     title = country if country else 'All Cities'
     covid_df = covid_df.assign(Date=covid_df['Date'].astype(np.datetime64))
     suffix = 'PerCapita' if per_capita else ''
-    df = covid_df[covid_df['confirmed'] > 0] \
+    df = covid_df[covid_df['Confirmed'] > 0] \
         .groupby(['Date']).sum() \
         .reset_index() \
         .melt(id_vars='Date',
               value_vars=[
-                  'confirmed' + suffix,
-                  'recovered' + suffix,
-                  'tested' + suffix,
-                  'deaths' + suffix
+                  'Confirmed' + suffix,
+                  'Recovered' + suffix,
+                  'Tested' + suffix,
+                  'Deaths' + suffix
               ]) \
         .sort_values('Date')
     fig = px.line(
@@ -155,7 +155,7 @@ def get_total_timeseries(covid_df, country=None, per_capita=False):
     return fig
 
 
-def get_country_timeseries(covid_df, count_col='confirmed'):
+def get_country_timeseries(covid_df, count_col='Confirmed'):
     last_df = covid_df[covid_df['Date'] == covid_df['Date'].max()]
 
     top_countries = last_df \
@@ -189,7 +189,7 @@ def get_country_timeseries(covid_df, count_col='confirmed'):
     return fig
 
 
-def get_bar_plot(covid_df, count_col='confirmed'):
+def get_bar_plot(covid_df, count_col='Confirmed'):
     last_df = covid_df[covid_df['Date'] == covid_df['Date'].max()]
     df = last_df.groupby([
         'City_Name',
@@ -198,7 +198,7 @@ def get_bar_plot(covid_df, count_col='confirmed'):
         .nlargest(plot_threshold, count_col) \
         .sort_values(count_col)
 
-    if count_col == 'confirmed':
+    if count_col == 'Confirmed':
         values = np.log10(df[count_col])
         x_label = count_col + ' (log10)'
     else:

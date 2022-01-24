@@ -27,10 +27,10 @@ def wrangle_data(covid_df):
 
     covid_df = covid_df.assign(
         logCumConf=np.where(
-            covid_df['confirmed'] > 0,
-            np.log(covid_df['confirmed']) /
+            covid_df['Confirmed'] > 0,
+            np.log(covid_df['Confirmed']) /
             np.where(
-                covid_df['confirmed'] > 700,
+                covid_df['Confirmed'] > 700,
                 np.log(1.01),
                 np.log(1.05)
             ),
@@ -38,14 +38,14 @@ def wrangle_data(covid_df):
         )
     )
 
-    covid_df['log10'] = np.where(covid_df['confirmed'] > 0,
-                                 np.ceil(np.log10(covid_df['confirmed'])), 0)
+    covid_df['log10'] = np.where(covid_df['Confirmed'] > 0,
+                                 np.ceil(np.log10(covid_df['Confirmed'])), 0)
     covid_df['log_group'] = np.power(10, covid_df['log10'] - 1).astype(np.int).astype(str) \
                             + '-' + np.power(10, covid_df['log10']).astype(np.int).astype(str)
     covid_df['Description'] = covid_df['City_Name'] + '<br>' \
-                              + 'Confirmed: ' + covid_df['confirmed'].astype(str) + '<br>' \
+                              + 'Confirmed: ' + covid_df['Confirmed'].astype(str) + '<br>' \
                               + 'Recovered: ' + covid_df['recovered'].astype(str) + '<br>' \
-                              + 'Tested: ' + covid_df['tested'].astype(str) + '<br>' \
-                              + 'Deaths: ' + covid_df['deaths'].astype(str) + '<br>' \
+                              + 'Tested: ' + covid_df['Tested'].astype(str) + '<br>' \
+                              + 'Deaths: ' + covid_df['Deaths'].astype(str) + '<br>' \
                               + 'Confirmed Range: ' + covid_df['log_group'].astype(str) + '<br>'
     return covid_df

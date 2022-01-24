@@ -44,7 +44,7 @@ def wrangle_data(covid_df):
                             + '-' + np.power(10, covid_df['log10']).astype(np.int).astype(str)
     covid_df['Description'] = covid_df['City_Name'] + '<br>' \
                               + 'Confirmed: ' + covid_df['Confirmed'].astype(str) + '<br>' \
-                              + 'Recovered: ' + covid_df['recovered'].astype(str) + '<br>' \
+                              + 'Recovered: ' + covid_df['Recovered'].astype(str) + '<br>' \
                               + 'Tested: ' + covid_df['Tested'].astype(str) + '<br>' \
                               + 'Deaths: ' + covid_df['Deaths'].astype(str) + '<br>' \
                               + 'Confirmed Range: ' + covid_df['log_group'].astype(str) + '<br>'

@@ -42,7 +42,7 @@ app = dash.Dash(
 app.index_string = open('index.html', 'r').read()
 
 def fetch_data():
-    url = 'https://mapsaudi.com/geoserver/ows?outputFormat=csv&service=WFS&srs=EPSG%3A3857&request=GetFeature&typename=geonode%3Acasestrial&version=1.0.0'
+    url = 'https://geoportal.mapsaudi.com/geoserver/ows?outputFormat=csv&service=WFS&srs=EPSG%3A3857&request=GetFeature&typename=geonode%3Acasestrial&version=1.0.0'
     return pd.read_csv(url)
 
 covid_df = fetch_data()

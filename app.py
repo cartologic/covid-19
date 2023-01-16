@@ -1,7 +1,7 @@
 import logging
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dcc
+from dash import html
 import pandas as pd
 from dash.dependencies import Input, Output
 import time, os, re
@@ -42,7 +42,7 @@ app = dash.Dash(
 app.index_string = open('index.html', 'r').read()
 
 def fetch_data():
-    url = 'https://geoportal.mapsaudi.com/geoserver/ows?outputFormat=csv&service=WFS&srs=EPSG%3A3857&request=GetFeature&typename=geonode%3Acasestrial&version=1.0.0'
+    url = 'https://geoportal.tabaqat.net/geoserver/ows?outputFormat=csv&service=WFS&srs=EPSG%3A3857&request=GetFeature&typename=geonode%3Acasestrial&version=1.0.0'
     return pd.read_csv(url)
 
 covid_df = fetch_data()

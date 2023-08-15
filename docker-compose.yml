@@ -1,11 +1,11 @@
-version: '3'
+version: '3.8'
 services:
   saudi-dashboard:
     build: .
     ports:
       - 9595:9000
     restart: unless-stopped
-#    volumes:
-#      - "data:/code/data"
-#volumes:
-#  data:
+    volumes:
+      - data:/app
+volumes:
+ data:
